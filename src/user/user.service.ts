@@ -45,4 +45,17 @@ export class UserService {
     return this.userRepository.findOne({ where: { username } });
   }
 
+  async deposit(username: string, amount: number): Promise<User> {
+    const user = await this.findByUsername(username);
+
+    if (!user) {
+      throw new HttpException('User not found', 404);
+    }
+
+    console.log(`Depositing ${amount} to ${username}...`)
+
+    user.deposit += amount;
+    return this.userRepository.save(user);
+  }
+
 }
