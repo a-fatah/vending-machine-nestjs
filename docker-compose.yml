@@ -1,0 +1,10 @@
+version: '3'
+services:
+  db:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: s3cr3t
+      POSTGRES_DB: nestjs-demo
