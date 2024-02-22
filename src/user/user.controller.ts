@@ -27,4 +27,13 @@ export class UserController {
     await this.userService.deposit(user.username, amount);
   }
 
+  @Post('/reset')
+  @HasRole(Role.Buyer)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @HttpCode(200)
+  async reset(@Request() req: Request & { user: User }) {
+    const { user } = req;
+    await this.userService.reset(user.username);
+  }
+
 }

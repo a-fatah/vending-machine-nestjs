@@ -58,4 +58,17 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
+  async reset(username: string): Promise<User> {
+    const user = await this.findByUsername(username);
+
+    if (!user) {
+      throw new HttpException('User not found', 404);
+    }
+
+    console.log(`Resetting deposit for ${username}...`)
+
+    user.deposit = 0;
+    return this.userRepository.save(user);
+  }
+
 }
