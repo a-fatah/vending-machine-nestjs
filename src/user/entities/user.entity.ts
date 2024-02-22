@@ -11,6 +11,6 @@ export class User {
     @Column({ type: 'enum', enum: ['buyer', 'seller']})
     role: string;
 
-    @Column({ type: 'decimal', precision: 10, scale: 2 })
+    @Column({ type: 'int' })
     deposit: number;
 }
