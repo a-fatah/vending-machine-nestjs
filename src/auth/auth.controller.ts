@@ -1,8 +1,8 @@
-import { Body, Controller, Get, Post, Request, UseGuards } from "@nestjs/common";
-import { AuthService } from "./auth.service";
+import { Controller, Get, Post, Request, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { User } from "src/user/entities/user.entity";
 import { JwtService } from "@nestjs/jwt";
+import { JwtAuthGuard } from "./jwt-auth.guard";
 
 @Controller()
 export class AuthController {
@@ -18,6 +18,12 @@ export class AuthController {
         return {
             accessToken
         }
+    }
+
+    @Get('/profile')
+    @UseGuards(JwtAuthGuard)
+    getProfile(@Request() req: Request & { user: User }) {
+        return req.user;
     }
 }
 
