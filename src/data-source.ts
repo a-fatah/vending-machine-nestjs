@@ -1,5 +1,4 @@
 import { DataSource } from "typeorm";
-import { User } from "./user/entities/user.entity";
 
 export const AppDataSource = new DataSource({
     type: "postgres",
@@ -7,7 +6,7 @@ export const AppDataSource = new DataSource({
     port: 5432,
     username: "dev",
     password: "s3cr3t",
-    database: "nestjs-demo",
+    database: "restful-vending-machine",
     synchronize: true,
     logging: true,
     subscribers: [],

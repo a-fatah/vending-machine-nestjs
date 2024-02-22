@@ -14,7 +14,7 @@ import { CustomExceptionFilter } from './exception.filter';
       port: 5432,
       password: 's3cr3t',
       username: 'dev',
-      database: 'nestjs-demo',
+      database: 'restful-vending-machine',
       synchronize: true,
       logging: true,
       entities: ['dist/**/*.entity.js'],

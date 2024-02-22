@@ -7,4 +7,4 @@ services:
     environment:
       POSTGRES_USER: dev
       POSTGRES_PASSWORD: s3cr3t
-      POSTGRES_DB: nestjs-demo
+      POSTGRES_DB: vending-machine
