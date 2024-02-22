@@ -1,12 +1,12 @@
 import { DataSource, DataSourceOptions } from "typeorm";
 
 export const dataSourceOptions: DataSourceOptions = {
-    type: 'mysql',
+    type: 'postgres',
     host: 'localhost',
-    port: 3306,
-    username: 'root',
-    password: 'password',
-    database: 'ecommerce',
+    port: 5432,
+    username: 'dev',
+    password: 's3cr3t',
+    database: 'vending-machine',
     migrations: ['dist/db/migrations/*.js'],
 };
 

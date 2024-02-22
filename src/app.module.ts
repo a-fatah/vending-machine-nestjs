@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { APP_FILTER } from '@nestjs/core';
-import { CustomExceptionFilter } from './exception.filter';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -14,20 +14,17 @@ import { CustomExceptionFilter } from './exception.filter';
       port: 5432,
       password: 's3cr3t',
       username: 'dev',
-      database: 'restful-vending-machine',
+      database: 'vending-machine',
       synchronize: true,
       logging: true,
       entities: ['dist/**/*.entity.js'],
     }),
-    UserModule
+    UserModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [
-    AppService,
-    {
-      provide: APP_FILTER,
-      useClass: CustomExceptionFilter,
-    }
+    AppService
   ],
 })
 export class AppModule {}
