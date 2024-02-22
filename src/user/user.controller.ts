@@ -4,9 +4,9 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { DepositDto } from './dto/deposit.dto';
 import { HasRole } from 'src/auth/roles.decorator';
 import { Role } from 'src/auth/role.enum';
-import { AuthGuard } from '@nestjs/passport';
 import { User } from './entities/user.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/guard/role.guard';
 
 @Controller()
 export class UserController {
@@ -19,7 +19,7 @@ export class UserController {
 
   @Post('/deposit')
   @HasRole(Role.Buyer)
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @HttpCode(200)
   async deposit(@Request() req: Request & { user: User }, @Body() depositDto: DepositDto) {
     const { user } = req;
