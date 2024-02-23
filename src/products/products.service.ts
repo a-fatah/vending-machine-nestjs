@@ -2,7 +2,7 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Product } from './entities/product.entity';
+import { Product, ProductSummary } from './entities/product.entity';
 import { Repository } from 'typeorm';
 import { User } from 'src/user/entities/user.entity';
 
@@ -35,19 +35,39 @@ export class ProductsService {
     return this.productRepository.save(product);
   }
 
-  findAll() {
-    return this.productRepository.find();
+  async findAll(): Promise<ProductSummary[]> {
+    const products = await this.productRepository.find();
+
+    return products.map(product => {
+      return {
+        name: product.name,
+        amountAvailable: product.amountAvailable,
+        cost: product.cost,
+        seller: { name: product.seller.username }
+      }
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findOne(id: number): Promise<ProductSummary> {
+    const product = await this.productRepository.findOne({ where: { id } });
+
+    if (!product) {
+      throw new HttpException('Product not found', 404);
+    }
+
+    return {
+      name: product.name,
+      amountAvailable: product.amountAvailable,
+      cost: product.cost,
+      seller: { name: product.seller.username }
+    };
   }
 
   update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+    return this.productRepository.update({ id }, updateProductDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} product`;
+    return this.productRepository.delete({ id });
   }
 }

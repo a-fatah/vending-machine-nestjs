@@ -15,7 +15,17 @@ export class Product {
     @Column()
     cost: number;
 
-    @ManyToOne(() => User)
+    @ManyToOne(() => User, { eager: true })
     @JoinColumn({ name: 'seller' })
     seller: User;
+}
+
+
+type SellerName = { name: User['username'] };
+
+export type ProductSummary = {
+    name: Product['name'];
+    amountAvailable: Product['amountAvailable'];
+    cost: Product['cost'];
+    seller: SellerName;
 }

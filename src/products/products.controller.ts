@@ -7,6 +7,7 @@ import { RolesGuard } from 'src/auth/guard/role.guard';
 import { HasRole } from 'src/auth/roles.decorator';
 import { Role } from 'src/auth/role.enum';
 import { User } from 'src/user/entities/user.entity';
+import { ProductSummary } from './entities/product.entity';
 
 @Controller('products')
 export class ProductsController {
@@ -23,12 +24,12 @@ export class ProductsController {
   }
 
   @Get()
-  findAll() {
+  findAll(): Promise<ProductSummary[]> {
     return this.productsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string): Promise<ProductSummary> {
     return this.productsService.findOne(+id);
   }
 
