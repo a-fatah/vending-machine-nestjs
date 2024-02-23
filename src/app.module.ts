@@ -6,6 +6,7 @@ import { UserModule } from './user/user.module';
 import { APP_FILTER } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
 import { ProductsModule } from './products/products.module';
+import { TransactionsModule } from './transactions/transactions.module';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { ProductsModule } from './products/products.module';
     }),
     UserModule,
     AuthModule,
-    ProductsModule
+    ProductsModule,
+    TransactionsModule,
   ],
   controllers: [AppController],
   providers: [

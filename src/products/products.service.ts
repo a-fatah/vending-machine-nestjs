@@ -48,19 +48,14 @@ export class ProductsService {
     });
   }
 
-  async findOne(id: number): Promise<ProductSummary> {
+  async findOne(id: number): Promise<Product> {
     const product = await this.productRepository.findOne({ where: { id } });
 
     if (!product) {
       throw new HttpException('Product not found', 404);
     }
 
-    return {
-      name: product.name,
-      amountAvailable: product.amountAvailable,
-      cost: product.cost,
-      seller: { name: product.seller.username }
-    };
+    return product;
   }
 
   private async validateSellerOwnsProduct(username: string, id: number): Promise<void> {
@@ -90,4 +85,9 @@ export class ProductsService {
 
     return this.productRepository.delete({ id });
   }
+
+  updateAvailability(id: number, amountAvailable: number) {
+    return this.productRepository.update({ id }, { amountAvailable });
+  }
+
 }

@@ -29,8 +29,15 @@ export class ProductsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<ProductSummary> {
-    return this.productsService.findOne(+id);
+  async findOne(@Param('id') id: string): Promise<ProductSummary> {
+    const product = await this.productsService.findOne(+id);
+
+    return {
+      name: product.name,
+      amountAvailable: product.amountAvailable,
+      cost: product.cost,
+      seller: { name: product.seller.username }
+    };
   }
 
   @Patch(':id')
