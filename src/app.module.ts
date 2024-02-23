@@ -1,9 +1,6 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
-import { APP_FILTER } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
 import { ProductsModule } from './products/products.module';
 import { TransactionsModule } from './transactions/transactions.module';
@@ -30,9 +27,7 @@ import { ConfigModule } from '@nestjs/config';
     ProductsModule,
     TransactionsModule,
   ],
-  controllers: [AppController],
-  providers: [
-    AppService
-  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
