@@ -63,11 +63,31 @@ export class ProductsService {
     };
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
+  private async validateSellerOwnsProduct(username: string, id: number): Promise<void> {
+    // find seller by username
+    const seller = await this.userRepository.findOne({ where: { username } });
+
+    if (!seller) {
+      throw new HttpException('User not found', 404);
+    }
+
+    console.log(`Checking if seller ${seller.username} has product with id ${id}`)
+    const product = await this.productRepository.findOne({ where: { id, seller } });
+
+    if (!product) {
+      throw new HttpException('Product not found', 404);
+    }
+  }
+
+  async update(username: string, id: number, updateProductDto: UpdateProductDto) {
+    await this.validateSellerOwnsProduct(username, id);
+
     return this.productRepository.update({ id }, updateProductDto);
   }
 
-  remove(id: number) {
+  async remove(username: string, id: number) {
+    await this.validateSellerOwnsProduct(username, id);
+
     return this.productRepository.delete({ id });
   }
 }

@@ -34,12 +34,18 @@ export class ProductsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productsService.update(+id, updateProductDto);
+  @HasRole(Role.Seller)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  update(@Request() req: Request & { user: User }, @Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
+    const { username } = req.user;
+    return this.productsService.update(username, +id, updateProductDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.productsService.remove(+id);
+  @HasRole(Role.Seller)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  remove(@Request() req: Request & { user: User }, @Param('id') id: string) {
+    const { username } = req.user;
+    return this.productsService.remove(username, +id);
   }
 }
