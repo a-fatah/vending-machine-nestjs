@@ -20,11 +20,12 @@ export class TransactionsController {
     const { product, cost, changeAmount } =  await this.transactionsService.buy(username, buyDto);
 
     const changeCoins = this.transactionsService.calculateChangeDenominations(changeAmount);
+    const change = Object.fromEntries(changeCoins);
 
     return {
       productName: product.name,
       moneySpent: cost,
-      change: changeCoins
+      change
     };
 
   }
